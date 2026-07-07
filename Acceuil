@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>France Identité - Maquette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0f1f6b;
+    --blue-flag:#002654;
+    --red-flag:#ed2939;
+    --gold:#f5c518;
+    --paper:#fbfaf7;
+    --ink:#1a1a1a;
+    --muted:#6b6f76;
+    --line:#e3e1db;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    background:var(--paper);
+    font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding:40px 20px;
+  }
+ 
+  .app{
+    width:380px;
+  }
+ 
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 4px 18px;
+  }
+  .greeting{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:22px;
+    color:#111;
+  }
+  .profile-icon{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff; font-size:18px;
+  }
+ 
+  /* ---- Zone blanche (à la place de la carte) ---- */
+  .blank-space{
+    background:#ffffff;
+    height:220px;
+    border-radius:14px;
+    margin-bottom:26px;
+    border:2px dashed #d6d6d0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    overflow:hidden;
+    position:relative;
+    transition:border-color .2s ease;
+  }
+  .blank-space:hover{
+    border-color:var(--navy);
+  }
+  .blank-space .placeholder-text{
+    color:var(--muted);
+    font-size:14px;
+  }
+  .blank-space img{
+    display:none;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .blank-space.has-image{
+    border:1px solid #e2e2da;
+  }
+  .blank-space.has-image .placeholder-text{
+    display:none;
+  }
+  .blank-space.has-image img{
+    display:block;
+  }
+ 
+  /* ---- ID card (inutilisé) ---- */
+  .id-card{
+    background:#fdfdfb;
+    border-radius:14px;
+    box-shadow:0 12px 26px rgba(0,0,0,.16);
+    overflow:hidden;
+    border:1px solid #e2e2da;
+    margin-bottom:26px;
+  }
+  .id-card .band{
+    background:var(--paper);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 16px 6px;
+  }
+  .marianne{
+    width:32px;height:32px;
+    background:linear-gradient(90deg, var(--blue-flag) 0 33%, #fff 33% 66%, var(--red-flag) 66% 100%);
+    border-radius:4px;
+    flex-shrink:0;
+    position:relative;
+  }
+  .marianne::after{
+    content:"";
+    position:absolute; inset:6px 10px;
+    background:#333;
+    -webkit-mask:radial-gradient(circle at 50% 30%, black 40%, transparent 41%);
+  }
+  .id-title{
+    font-weight:800;
+    font-size:15px;
+    color:#111;
+    line-height:1.15;
+  }
+  .id-title small{
+    display:block;
+    font-weight:600;
+    font-size:8.5px;
+    letter-spacing:1.5px;
+    color:#333;
+  }
+  .fr-badge{
+    margin-left:auto;
+    width:28px;height:28px;border-radius:50%;
+    background:var(--blue-flag);
+    border:2px solid var(--gold);
+    color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:9.5px;font-weight:800;
+    flex-shrink:0;
+  }
+ 
+  .id-body{
+    display:flex;
+    gap:14px;
+    padding:10px 16px 16px;
+  }
+  .avatar{
+    width:86px;height:106px;
+    border-radius:6px;
+    background:linear-gradient(160deg,#dfe3ea,#c7ccd6);
+    flex-shrink:0;
+    overflow:hidden;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+  }
+ 
+  .fields{
+    flex:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px 10px;
+    font-size:11px;
+  }
+  .fields .full{grid-column:1 / -1;}
+  .fields label{
+    display:block;
+    font-size:8px;
+    color:var(--muted);
+    letter-spacing:.2px;
+    font-style:italic;
+    line-height:1.2;
+  }
+  .fields .val{
+    font-weight:700;
+    color:#111;
+    font-size:12.5px;
+    line-height:1.3;
+  }
+ 
+  /* ---- Menu list (3 categories) ---- */
+  .menu-item{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:16px 0;
+    text-decoration:none;
+    cursor:pointer;
+    transition:opacity .15s ease;
+  }
+  .menu-item:hover{
+    opacity:.75;
+  }
+  .menu-item + .menu-item{
+    border-top:1px solid var(--line);
+  }
+  .menu-icon{
+    width:44px;height:44px;
+    border-radius:12px;
+    background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-size:20px;
+    flex-shrink:0;
+  }
+  .menu-text h3{
+    margin:0 0 3px;
+    font-size:16px;
+    color:#111;
+  }
+  .menu-text p{
+    margin:0;
+    font-size:13px;
+    color:var(--muted);
+  }
+</style>
+</head>
+<body>
+ 
+<div class="app">
+ 
+  <div class="topbar">
+    <span class="greeting">Bonjour Adam Colcanap</span>
+    <div class="profile-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+    </div>
+  </div>
+ 
+  <div class="blank-space" id="dropZone" onclick="document.getElementById('photoInput').click()">
+    <span class="placeholder-text" id="placeholderText">+ Ajouter une photo</span>
+    <img id="preview" alt="">
+  </div>
+  <input type="file" id="photoInput" accept="image/*" style="display:none">
+ 
+  <a class="menu-item" href="scanner-qr.html">
+    <div class="menu-icon">⚏</div>
+    <div class="menu-text">
+      <h3>Scanner un QR code</h3>
+      <p>Se connecter à un service.</p>
+    </div>
+  </a>
+ 
+  <a class="menu-item" href="justificatif.html">
+    <div class="menu-icon">✎</div>
+    <div class="menu-text">
+      <h3>Générer un justificatif d'identité</h3>
+      <p>Remplacer vos photocopies d'identité.</p>
+    </div>
+  </a>
+ 
+  <a class="menu-item" href="verifier-document.html">
+    <div class="menu-icon">🔎</div>
+    <div class="menu-text">
+      <h3>Vérifier un document</h3>
+      <p>Contrôler l'authenticité d'un justificatif.</p>
+    </div>
+  </a>
+ 
+</div>
+ 
+<script>
+  const photoInput = document.getElementById('photoInput');
+  const dropZone = document.getElementById('dropZone');
+  const preview = document.getElementById('preview');
+ 
+  photoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      preview.src = ev.target.result;
+      dropZone.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  });
+ 
+  // Permet aussi de glisser-déposer une image
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.style.borderColor = 'var(--navy)';
+  });
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.style.borderColor = '';
+  });
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.style.borderColor = '';
+    const file = e.dataTransfer.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      preview.src = ev.target.result;
+      dropZone.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  });
+</script>
+</body>
+</html>
