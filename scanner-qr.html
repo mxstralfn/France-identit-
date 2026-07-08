@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Scanner un QR code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0f1f6b;
+    --blue-flag:#002654;
+    --red-flag:#ed2939;
+    --gold:#f5c518;
+    --paper:#fbfaf7;
+    --ink:#1a1a1a;
+    --muted:#6b6f76;
+    --line:#e3e1db;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    background:var(--paper);
+    font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    padding:40px 20px;
+  }
+  .app{ width:380px; }
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:0 4px 24px;
+  }
+  .back-btn{
+    width:36px;height:36px;
+    border-radius:50%;
+    background:#fff;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    text-decoration:none;
+    color:var(--ink);
+    flex-shrink:0;
+  }
+  .page-title{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:20px;
+    color:#111;
+  }
+
+  .scanner-frame{
+    background:#111417;
+    border-radius:20px;
+    height:360px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:22px;
+    box-shadow:0 12px 26px rgba(0,0,0,.2);
+  }
+  .viewfinder{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:210px; height:210px;
+  }
+  .corner{
+    position:absolute;
+    width:34px; height:34px;
+    border:4px solid var(--gold);
+  }
+  .corner.tl{top:0;left:0;border-right:none;border-bottom:none;border-top-left-radius:8px;}
+  .corner.tr{top:0;right:0;border-left:none;border-bottom:none;border-top-right-radius:8px;}
+  .corner.bl{bottom:0;left:0;border-right:none;border-top:none;border-bottom-left-radius:8px;}
+  .corner.br{bottom:0;right:0;border-left:none;border-top:none;border-bottom-right-radius:8px;}
+  .scan-line{
+    position:absolute;
+    left:6px; right:6px;
+    height:2px;
+    background:var(--gold);
+    box-shadow:0 0 8px var(--gold);
+    animation:scan 2.2s ease-in-out infinite;
+  }
+  @keyframes scan{
+    0%{ top:6px; }
+    50%{ top:calc(100% - 8px); }
+    100%{ top:6px; }
+  }
+  .scanner-hint{
+    position:absolute;
+    bottom:18px; left:0; right:0;
+    text-align:center;
+    color:#fff;
+    font-size:13px;
+    opacity:.85;
+  }
+
+  .instructions{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+  }
+  .instructions h3{
+    margin:0 0 6px;
+    font-size:15px;
+    color:#111;
+  }
+  .instructions p{
+    margin:0;
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+
+  .home-link{
+    display:inline-block;
+    margin-top:22px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--navy);
+    text-decoration:none;
+  }
+  .home-link:hover{ text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="topbar">
+    <a class="back-btn" href="france-identite-app.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </a>
+    <span class="page-title">Scanner un QR code</span>
+  </div>
+
+  <a class="home-link" href="france-identite-app.html">← Retour à l'accueil</a>
+
+  <div class="scanner-frame">
+    <div class="viewfinder">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="scan-line"></div>
+    </div>
+    <div class="scanner-hint">Placez le QR code dans le cadre</div>
+  </div>
+
+  <div class="instructions">
+    <h3>Se connecter à un service</h3>
+    <p>Scannez le QR code affiché par le site ou le service partenaire pour vous identifier de manière sécurisée, sans saisir vos identifiants.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
